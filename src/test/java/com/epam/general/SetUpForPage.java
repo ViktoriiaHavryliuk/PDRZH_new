@@ -91,20 +91,11 @@ package com.epam.general;
 		}
 		
 		//method that checks the presence of element
-		public static boolean isElementPresent(By element)
-		{
-			boolean value = false;
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			try{
-				if (driver.findElement(element).isEnabled());
-
-				{
-					value = true;
-				}
-			} catch (NoSuchElementException e) {
-				System.out.println("Unable to locate element: " + element);
-			} 
-			return value;
+		public boolean isElementPresent(By locator) {
+		Driver.get().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> elements = Driver.get().findElements(locator);
+		Driver.get().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		return elements.size() > 0 && elements.get(0).isDisplayed();
 		}
 
 		@BeforeScenario
